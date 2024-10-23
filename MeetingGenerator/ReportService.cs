@@ -1,8 +1,10 @@
 ﻿using MeetingGenerator.Config;
 using MeetingGenerator.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,7 +64,19 @@ namespace MeetingGenerator
 
         public async Task SaveReportAsync(string report)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Try to send meeting to Mattermost");
+            Console.WriteLine(report);
+
+            var body = new { channel_id = _configuration.MattermostChannelId, message = report };
+
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, _configuration.MattermostUrl);
+            httpRequest.Headers.Add("Authorization", $"Bearer {_configuration.MattermostAccessToken}");
+            httpRequest.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+
+            using var httpClient = new HttpClient();
+            var response = await httpClient.SendAsync(httpRequest);
+
+            Console.WriteLine("Meeting has been sent to Mattermost");
         }
     }
 }

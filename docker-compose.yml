@@ -1,0 +1,25 @@
+﻿services:
+  meetinggenerator:
+    image: ${DOCKER_REGISTRY-}meetinggenerator
+    build:
+      context: .
+      dockerfile: MeetingGenerator/Dockerfile
+    environment:
+      - Sync__AvailableWorkIssuesFilter__0=В работе
+      - Sync__AvailableWorkIssuesFilter__1=Новая
+      - Sync__Users__0__RedmineUrl=123
+      - Sync__Users__0__RedmineApiKey=123
+      - Sync__Users__0__RedmineProjectId=123
+      - Sync__Users__0__ReporterName=123
+      - Sync__Users__0__MattermostUrl=123
+      - Sync__Users__0__MattermostChannelId=123
+      - Sync__Users__0__MattermostAccessToken=123
+      - Sync__Users__1__RedmineUrl=123
+      - Sync__Users__1__RedmineApiKey=123
+      - Sync__Users__1__RedmineProjectId=123
+      - Sync__Users__1__ReporterName=123
+      - Sync__Users__1__MattermostUrl=123
+      - Sync__Users__1__MattermostChannelId=123
+      - Sync__Users__1__MattermostAccessToken=123
+      
+        

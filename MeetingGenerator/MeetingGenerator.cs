@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace MeetingGenerator
 {
@@ -23,9 +24,9 @@ namespace MeetingGenerator
 
         private void CheckErrors(Task task)
         {
-            if (!task.IsFaulted)
+            if (task.IsFaulted)
             {
-                return;
+                throw new ApplicationException(task.Exception.Message);
             }
         }
     }
