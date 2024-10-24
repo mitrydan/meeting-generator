@@ -12,7 +12,7 @@
 
         public string MattermostUrl { get; set; }
 
-        public int MattermostChannelId { get; set; }
+        public string MattermostChannelId { get; set; }
 
         public string MattermostAccessToken { get; set; }
     }

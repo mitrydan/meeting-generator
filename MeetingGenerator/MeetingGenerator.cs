@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MeetingGenerator
 {
@@ -16,18 +15,9 @@ namespace MeetingGenerator
 
         public async Task GenerateAsync()
         {
-            await _redmineProxy.GetWorkItemsInfo()
-                .ContinueWith(t => _reportService.CreateReport(t.Result.timeEntries, t.Result.workIssues))
-                .ContinueWith(t => _reportService.SaveReportAsync(t.Result))
-                .ContinueWith(CheckErrors);
-        }
-
-        private void CheckErrors(Task task)
-        {
-            if (task.IsFaulted)
-            {
-                throw new ApplicationException(task.Exception.Message);
-            }
+            var workItems = await _redmineProxy.GetWorkItemsInfo();
+            var report = _reportService.CreateReport(workItems.timeEntries, workItems.workIssues);
+            await _reportService.SaveReportAsync(report);
         }
     }
 }
